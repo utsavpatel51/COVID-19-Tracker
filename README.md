@@ -1,8 +1,7 @@
 # COVID-19-Tracker
 
-This is not any official data!!! Purpose of creating application is to learn how to integrate Chart.js with Python and create some interactive graphs.
-I have used https://api.covid19india.org/ API for getting data. 
-
+The purpose of the project was to learn about using Chart.JS with Python and how to show data in form of interactive graphs. To get the data I have used 
+https://api.covid19india.org/ API.
 <p>Home page</p>
 <img src="img/home.png"/>
 <hr>

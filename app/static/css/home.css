@@ -15,6 +15,9 @@ html, body{
     height: 100%;
 }
 
+.container-fluid{
+    padding-top: 2rem;
+}
 .confirmed_h{
     color: red;
     text-align: center;

@@ -2,14 +2,14 @@
 <div id="main">
 	<div id="main_left" style="float: left">
 		<h4 style="text-align: center; margin-bottom: 2%">
-			<b>INDIA COVID-19 TRACKER</b>
+			<b>COVID-19 TRACKER</b>
 		</h4>
 		<div class="container">
 			<div class="row">
 				<div class="minimap col">
 					<h6 class="confirmed_h">CONFIRMED</h6>
 					<h4 class="confirmed_h">
-						{{total[0]}}
+						{{total[0]}}<br>
 						<p style="font-size: 8pt; display: inline">
 							[+{{change[0]}}]
 						</p>
@@ -19,7 +19,7 @@
 				<div class="minimap col">
 					<h6 class="recovered_h">RECOVERED</h6>
 					<h4 class="recovered_h">
-						{{total[1]}}
+						{{total[1]}}<br>
 						<p style="font-size: 8pt; display: inline">
 							[+{{change[1]}}]
 						</p>
@@ -28,13 +28,16 @@
 				</div>
 				<div class="minimap col">
 					<h6 class="active_h">ACTIVE</h6>
-					<h4 class="active_h">{{total[2]}}</h4>
+					<h4 class="active_h">
+                        {{total[2]}}<br>
+                        <br>
+                    </h4>
 					<canvas id="active_can" width="120" height="60"></canvas>
 				</div>
 				<div class="minimap col">
 					<h6 class="deceased_h">DECEASED</h6>
 					<h4 class="deceased_h">
-						{{total[3]}}
+						{{total[3]}}<br>
 						<p style="font-size: 8pt; display: inline">
 							[+{{change[2]}}]
 						</p>
@@ -170,7 +173,7 @@
 
 <script src="{{ url_for('static', filename='myChart.js') }}"></script>
 <script>
-	var daily = JSON.parse("{{daily | tojson | safe}}");
+	var daily = JSON.parse('{{daily | tojson | safe}}');
 	var dailyconfirmed = daily.confirmed;
 	var dailyrecovered = daily.recovered;
 	var dailyactive = daily.active;
@@ -221,9 +224,6 @@
 	                           $("#counta").html(infoforcount[this.name][0][2]);
 	                           $("#countd").html(infoforcount[this.name][0][3]);
 	                           $("#countstate").html(this.name)
-	                       },
-	                       mouseOut: function(){
-	                           console.log('1')
 	                       }
 	                   },
 	               },

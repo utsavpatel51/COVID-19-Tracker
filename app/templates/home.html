@@ -1,176 +1,244 @@
-{% extends "layout.html" %}
-{% block content %}
+{% extends "layout.html" %} {% block content %}
 <div id="main">
-    <div id="main_left" style="float: left;">
-        <h4 style="text-align: center;margin-bottom: 2%;"><b>INDIA COVID-19 TRACKER</b></h4>
-        <div class="container">
-            <div class="row">
-                <div class="minimap col">
-                    <h6 class="confirmed_h">CONFIRMED</h6>
-                    <h4 class="confirmed_h">{{total[0]}}<p style="font-size: 8pt;display: inline;">[+{{change[0]}}]</p></h4>
-                    <canvas id="confirmed_can" width="120" height="60"></canvas>
-                </div>
-                <div class="minimap col">
-                    <h6 class="recovered_h">RECOVERED</h6>
-                    <h4 class="recovered_h">{{total[1]}}<p style="font-size: 8pt;display: inline;">[+{{change[1]}}]</p></h4>
-                    <canvas id="recovered_can" width="120" height="60"></canvas>
-                </div>
-                <div class="minimap col">
-                    <h6 class="active_h">ACTIVE</h6>
-                    <h4 class="active_h">{{total[2]}}</h4>
-                    <canvas id="active_can" width="120" height="60"></canvas>
-                </div>
-                <div class="minimap col">
-                    <h6 class="deceased_h">DECEASED</h6>
-                    <h4 class="deceased_h">{{total[3]}}<p style="font-size: 8pt;display: inline;">[+{{change[2]}}]</p></h4>
-                    <canvas id="deceased_can" width="120" height="60"></canvas>
-                </div>
-            </div>
-            <div class="row">
-                <table class="table table-sm table-hover">
-                    <thead>
-                        <tr class="active">
-                            <th scope="col">State</th>
-                            <th scope="col">CONFIRMED</th>
-                            <th scope="col">RECOVERED</th>
-                            <th scope="col">ACTIVE</th>
-                            <th scope="col">DECEASED</th>
-                        </tr>
-                    </thead>
-                    <tbody id="row_state">
-                        {% for state in stateinfo %}
-                            <tr role="button" data-toggle="collapse" href="#demo{{loop.index}}" aria-expanded="false" aria-controls="demo{{loop.index}}">
-                                <td scope="row"><small id="iconc">▶</small> {{state.get('state')}}</td>
-                                <td style="color: rgba(240,10,10,1);">{{state.get('confirmed')}}</td>
-                                <td style="color: rgba(15,117,10,1);">{{state.get('recovered')}}</td>
-                                <td style="color: rgba(24,73,207,1);">{{state.get('active')}}</td>
-                                <td style="color: rgba(131,132,134,1);">{{state.get('deaths')}}</td>
-                            </tr>
-                            <tr>
-                                <td class="hiddenRow" style="background-color: white;">
-                                    <div class="collapse" id="demo{{loop.index}}" style="background-color: white;">
-                                        <table class="table table-nested">
-                                            <thead>
-                                                <tr class="active">
-                                                    <th scope="col">District</th>
-                                                    <th scope="col">CONFIRMED</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for district in  districtinfo.get(state.get('state')) %}
-                                                <tr>
-                                                    <td class="col-xs-4 col-sm-2 active">{{ district[0] }}</td>
-                                                    <td style="color: rgba(240,10,10,1);">{{ district[1] }}</td>
-                                                </tr>
-                                                {% endfor %}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div id="main_right" style="float: left;">
-        <div>
-            <div id="countbox" style="background-color: #ffcccb;">
-                <h6 style="color:rgba(240,10,10,1) ;">CONFIRMED</h6>
-                <p id="countc" style="color:rgba(240,10,10,1);">{{ total[0] }}</p>
-            </div>
-            <div id="countbox" style="background-color:#9aff78;">
-                <h6 style="color: rgba(15,117,10,1);">RECOVERED</h6>
-                <p id="countr" style="color: rgba(15,117,10,1);">{{ total[1] }}</p>
-            </div>
-            <div id="countbox" style="background-color:#add8e6;">
-                <h6 style="color: rgba(24,73,207,1);">ACTIVE</h6>
-                <p id="counta" style="color: rgba(24,73,207,1);">{{ total[2] }}</p>
-            </div>
-            <div id="countbox" style="background-color:#CDCDCE;">
-                <h6 style="color: rgba(131,132,134,1);">DECEASED</h6>
-                <p id="countd" style="color: rgba(131,132,134,1);">{{ total[3] }}</p>
-            </div>
-        </div>
-        <h5 id="countstate" style="clear: both; margin-left:4%;color:rgba(240,10,10,1);">Total</h5>
-        <div id="container"></div>
-    </div>
+	<div id="main_left" style="float: left">
+		<h4 style="text-align: center; margin-bottom: 2%">
+			<b>INDIA COVID-19 TRACKER</b>
+		</h4>
+		<div class="container">
+			<div class="row">
+				<div class="minimap col">
+					<h6 class="confirmed_h">CONFIRMED</h6>
+					<h4 class="confirmed_h">
+						{{total[0]}}
+						<p style="font-size: 8pt; display: inline">
+							[+{{change[0]}}]
+						</p>
+					</h4>
+					<canvas id="confirmed_can" width="120" height="60"></canvas>
+				</div>
+				<div class="minimap col">
+					<h6 class="recovered_h">RECOVERED</h6>
+					<h4 class="recovered_h">
+						{{total[1]}}
+						<p style="font-size: 8pt; display: inline">
+							[+{{change[1]}}]
+						</p>
+					</h4>
+					<canvas id="recovered_can" width="120" height="60"></canvas>
+				</div>
+				<div class="minimap col">
+					<h6 class="active_h">ACTIVE</h6>
+					<h4 class="active_h">{{total[2]}}</h4>
+					<canvas id="active_can" width="120" height="60"></canvas>
+				</div>
+				<div class="minimap col">
+					<h6 class="deceased_h">DECEASED</h6>
+					<h4 class="deceased_h">
+						{{total[3]}}
+						<p style="font-size: 8pt; display: inline">
+							[+{{change[2]}}]
+						</p>
+					</h4>
+					<canvas id="deceased_can" width="120" height="60"></canvas>
+				</div>
+			</div>
+			<div class="row">
+				<table class="table table-sm table-hover">
+					<thead>
+						<tr class="active">
+							<th scope="col">State</th>
+							<th scope="col">CONFIRMED</th>
+							<th scope="col">RECOVERED</th>
+							<th scope="col">ACTIVE</th>
+							<th scope="col">DECEASED</th>
+						</tr>
+					</thead>
+					<tbody id="row_state">
+						{% for state in stateinfo %}
+						<tr
+							role="button"
+							data-toggle="collapse"
+							href="#demo{{loop.index}}"
+							aria-expanded="false"
+							aria-controls="demo{{loop.index}}"
+						>
+							<td scope="row">
+								<small id="iconc">▶</small>
+								{{state.get('state')}}
+							</td>
+							<td style="color: rgba(240, 10, 10, 1)">
+								{{state.get('confirmed')}}
+							</td>
+							<td style="color: rgba(15, 117, 10, 1)">
+								{{state.get('recovered')}}
+							</td>
+							<td style="color: rgba(24, 73, 207, 1)">
+								{{state.get('active')}}
+							</td>
+							<td style="color: rgba(131, 132, 134, 1)">
+								{{state.get('deaths')}}
+							</td>
+						</tr>
+						<tr>
+							<td
+								class="hiddenRow"
+								style="background-color: white"
+							>
+								<div
+									class="collapse"
+									id="demo{{loop.index}}"
+									style="background-color: white"
+								>
+									<table class="table table-nested">
+										<thead>
+											<tr class="active">
+												<th scope="col">District</th>
+												<th scope="col">CONFIRMED</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for district in
+											districtinfo.get(state.get('state'))
+											%}
+											<tr>
+												<td
+													class="col-xs-4 col-sm-2 active"
+												>
+													{{ district[0] }}
+												</td>
+												<td
+													style="
+														color: rgba(
+															240,
+															10,
+															10,
+															1
+														);
+													"
+												>
+													{{ district[1] }}
+												</td>
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div id="main_right" style="float: left">
+		<div>
+			<div id="countbox" style="background-color: #ffcccb">
+				<h6 style="color: rgba(240, 10, 10, 1)">CONFIRMED</h6>
+				<p id="countc" style="color: rgba(240, 10, 10, 1)">
+					{{ total[0] }}
+				</p>
+			</div>
+			<div id="countbox" style="background-color: #9aff78">
+				<h6 style="color: rgba(15, 117, 10, 1)">RECOVERED</h6>
+				<p id="countr" style="color: rgba(15, 117, 10, 1)">
+					{{ total[1] }}
+				</p>
+			</div>
+			<div id="countbox" style="background-color: #add8e6">
+				<h6 style="color: rgba(24, 73, 207, 1)">ACTIVE</h6>
+				<p id="counta" style="color: rgba(24, 73, 207, 1)">
+					{{ total[2] }}
+				</p>
+			</div>
+			<div id="countbox" style="background-color: #cdcdce">
+				<h6 style="color: rgba(131, 132, 134, 1)">DECEASED</h6>
+				<p id="countd" style="color: rgba(131, 132, 134, 1)">
+					{{ total[3] }}
+				</p>
+			</div>
+		</div>
+		<h5
+			id="countstate"
+			style="clear: both; margin-left: 4%; color: rgba(240, 10, 10, 1)"
+		>
+			Total
+		</h5>
+		<div id="container"></div>
+	</div>
 </div>
 
 <script src="{{ url_for('static', filename='myChart.js') }}"></script>
 <script>
-    var daily = JSON.parse('{{daily | tojson | safe}}');
-    var dailyconfirmed = daily.confirmed;
-    var dailyrecovered = daily.recovered;
-    var dailyactive = daily.active;
-    var dailydeceased = daily.deceased;
-    var date = daily._date;
+	var daily = JSON.parse("{{daily | tojson | safe}}");
+	var dailyconfirmed = daily.confirmed;
+	var dailyrecovered = daily.recovered;
+	var dailyactive = daily.active;
+	var dailydeceased = daily.deceased;
+	var date = daily._date;
 
-    minichart(date, dailyconfirmed, "confirmed_can", "rgba(240,10,10,1)");
-    minichart(date, dailyrecovered, "recovered_can", "rgba(15,117,10,1)");
-    minichart(date, dailyactive, "active_can", "rgba(24,73,207,1)");
-    minichart(date, dailydeceased, "deceased_can", "rgba(131,132,134,1)");
-
+	minichart(date, dailyconfirmed, "confirmed_can", "rgba(240,10,10,1)");
+	minichart(date, dailyrecovered, "recovered_can", "rgba(15,117,10,1)");
+	minichart(date, dailyactive, "active_can", "rgba(24,73,207,1)");
+	minichart(date, dailydeceased, "deceased_can", "rgba(131,132,134,1)");
 </script>
 
 <script>
-    var data = {{ key_map|tojson }};
-// Create the chart
-Highcharts.mapChart('container', {
-    chart: {
-        map: 'countries/in/in-all'
-    },
+	var data = {{ key_map|tojson }};
+	// Create the chart
+	Highcharts.mapChart('container', {
+	       chart: {
+	           map: 'countries/in/in-all'
+	       },
 
-    title: {
-        text: ''
-    },
+	       title: {
+	           text: ''
+	       },
 
-    mapNavigation: {
-        enabled: true,
-        buttonOptions: {
-            verticalAlign: 'bottom'
-        }
-    },
+	       mapNavigation: {
+	           enabled: true,
+	           buttonOptions: {
+	               verticalAlign: 'bottom'
+	           }
+	       },
 
-    colorAxis: {
-        endOnTick: false,
-        min: 0,
-        max: {{ max_ }},
-        minColor: "#f6eedf",
-        maxColor: "#ff0000"
-    },
+	       colorAxis: {
+	           endOnTick: false,
+	           min: 0,
+	           max: {{ max_ }},
+	           minColor: "#f6eedf",
+	           maxColor: "#ff0000"
+	       },
 
-    plotOptions: {
-        series: {
-            point: {
-                events: {
-                    mouseOver: function(){
-                        var infoforcount = JSON.parse('{{infoforcount | tojson | safe}}');
-                        $("#countc").html(infoforcount[this.name][0][0]);
-                        $("#countr").html(infoforcount[this.name][0][1]);
-                        $("#counta").html(infoforcount[this.name][0][2]);
-                        $("#countd").html(infoforcount[this.name][0][3]);
-                        $("#countstate").html(this.name)
-                    },
-                    mouseOut: function(){
-                        console.log('1')
-                    }
-                },
-            },
-        },
-    },
-    series: [{
-        data: data,
-        name: 'Confirmed case',
-        colors: ['#f6eedf', '#d1cebd', '#f57b51', '#d63447'],
-        states: {
-            hover: {
-                color: '#00bdaa'
-            }
-        }
-    }]
-});
-
+	       plotOptions: {
+	           series: {
+	               point: {
+	                   events: {
+	                       mouseOver: function(){
+	                           var infoforcount = JSON.parse('{{infoforcount | tojson | safe}}');
+	                           $("#countc").html(infoforcount[this.name][0][0]);
+	                           $("#countr").html(infoforcount[this.name][0][1]);
+	                           $("#counta").html(infoforcount[this.name][0][2]);
+	                           $("#countd").html(infoforcount[this.name][0][3]);
+	                           $("#countstate").html(this.name)
+	                       },
+	                       mouseOut: function(){
+	                           console.log('1')
+	                       }
+	                   },
+	               },
+	           },
+	       },
+	       series: [{
+	           data: data,
+	           name: 'Confirmed case',
+	           colors: ['#f6eedf', '#d1cebd', '#f57b51', '#d63447'],
+	           states: {
+	               hover: {
+	                   color: '#00bdaa'
+	               }
+	           }
+	       }]
+	});
 </script>
 {% endblock content %}
